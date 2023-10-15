@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import ru.practicum.errors.exceptions.BadParameterException;
+import ru.practicum.stats.errors.exceptions.BadParameterException;
 
 
 import javax.validation.ConstraintViolationException;
@@ -39,7 +39,9 @@ public class ErrorHandler {
     @ExceptionHandler({
             MethodArgumentNotValidException.class,
             ConstraintViolationException.class,
-            MethodArgumentTypeMismatchException.class})
+            MethodArgumentTypeMismatchException.class,
+            NullPointerException.class,
+            IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handleValidationErrors(RuntimeException e) {
         log.error(e.getMessage(), e);

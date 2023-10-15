@@ -6,17 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.practicum.dto.EndPointHitDto;
 import ru.practicum.dto.ViewStatsDto;
-import ru.practicum.errors.exceptions.BadParameterException;
+import ru.practicum.stats.errors.exceptions.BadParameterException;
 import ru.practicum.stats.mapper.EndPointHitMapper;
 import ru.practicum.stats.mapper.ViewStatsMapper;
 import ru.practicum.stats.model.EndPointHit;
 import ru.practicum.stats.repository.StatsRepository;
 
 import org.springframework.transaction.annotation.Transactional;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -30,22 +27,11 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ViewStatsDto> getStats(String startDate, String endDate, List<String> uris, boolean unique) {
-        if (startDate == null || startDate.isBlank() || endDate == null || endDate.isBlank()) {
-            throw new BadParameterException("Даты начала и окончания должны не могут быть пустыми",
-                    "bad parameter - stats");
-        }
-        LocalDateTime start = LocalDateTime.parse(
-                URLDecoder.decode(startDate, StandardCharsets.UTF_8),
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        LocalDateTime end = LocalDateTime.parse(
-                URLDecoder.decode(endDate, StandardCharsets.UTF_8),
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
 
         if (start.isAfter(end)) {
             throw new BadParameterException("Дата начала не может быть раньше даты окончания", "bad parameter - stats");
         }
-
 
         if (uris.isEmpty()) {
             if (unique) {
