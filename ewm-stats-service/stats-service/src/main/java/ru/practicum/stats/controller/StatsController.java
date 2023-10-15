@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.EndPointHitDto;
 import ru.practicum.dto.ViewStatsDto;
+import ru.practicum.errors.exceptions.BadParameterException;
 import ru.practicum.stats.service.StatsService;
 
 import javax.validation.Valid;
@@ -30,6 +31,7 @@ public class StatsController {
             @RequestParam(name = "end") String end,
             @RequestParam(name = "uris", required = false, defaultValue = "") List<String> uris,
             @RequestParam(name = "unique", required = false, defaultValue = "false") Boolean unique) {
+
         return statsService.getStats(start, end, uris, unique);
     }
 

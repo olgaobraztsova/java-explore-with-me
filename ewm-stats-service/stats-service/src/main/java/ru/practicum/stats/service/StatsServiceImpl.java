@@ -31,9 +31,9 @@ public class StatsServiceImpl implements StatsService {
     @Override
     @Transactional(readOnly = true)
     public List<ViewStatsDto> getStats(String startDate, String endDate, List<String> uris, boolean unique) {
-
-        if (startDate == null || endDate == null) {
-            throw new BadParameterException("Даты начала и окончания должны быть предоставлены", "bad parameter - stats");
+        if (startDate == null || startDate.isBlank() || endDate == null || endDate.isBlank()) {
+            throw new BadParameterException("Даты начала и окончания должны не могут быть пустыми",
+                    "bad parameter - stats");
         }
         LocalDateTime start = LocalDateTime.parse(
                 URLDecoder.decode(startDate, StandardCharsets.UTF_8),
