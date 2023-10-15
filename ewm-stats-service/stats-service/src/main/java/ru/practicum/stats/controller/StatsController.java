@@ -10,6 +10,10 @@ import ru.practicum.dto.ViewStatsDto;
 import ru.practicum.stats.service.StatsService;
 
 import javax.validation.Valid;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -25,13 +29,24 @@ public class StatsController {
     }
 
     @GetMapping("/stats")
-    public ResponseEntity<List<ViewStatsDto>> getStats(
-            @RequestParam(name = "start") String start,
-            @RequestParam(name = "end") String end,
+    public List<ViewStatsDto> getStats(
+            @RequestParam(name = "start") String startDate,
+            @RequestParam(name = "end") String endDate,
             @RequestParam(name = "uris", required = false, defaultValue = "") List<String> uris,
             @RequestParam(name = "unique", required = false, defaultValue = "false") Boolean unique) {
-        return new ResponseEntity<>(statsService.getStats(start, end, uris, unique), HttpStatus.OK);
+
+        LocalDateTime start = LocalDateTime.parse(
+                URLDecoder.decode(startDate, StandardCharsets.UTF_8),
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime end = LocalDateTime.parse(
+                URLDecoder.decode(endDate, StandardCharsets.UTF_8),
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return statsService.getStats(start, end, uris, unique);
     }
 
+    @GetMapping("/views/{eventId}")
+    public int getView(@PathVariable long eventId) {
+        return statsService.getViews(eventId);
+    }
 }
 

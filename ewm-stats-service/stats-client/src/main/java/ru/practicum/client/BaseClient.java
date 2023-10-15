@@ -1,3 +1,5 @@
+package ru.practicum.client;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.lang.Nullable;
