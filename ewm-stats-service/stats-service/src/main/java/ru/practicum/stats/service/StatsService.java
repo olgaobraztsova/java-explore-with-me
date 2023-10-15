@@ -10,4 +10,6 @@ public interface StatsService {
     List<ViewStatsDto> getStats(String start, String end, List<String> uris, boolean unique);
 
     EndPointHitDto createHit(EndPointHitDto endPointHitDto);
+
+    public int getViews(long eventId);
 }

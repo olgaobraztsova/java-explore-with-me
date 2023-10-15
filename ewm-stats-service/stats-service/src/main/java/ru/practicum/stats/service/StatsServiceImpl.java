@@ -26,8 +26,6 @@ import java.util.List;
 public class StatsServiceImpl implements StatsService {
 
     private final StatsRepository statsRepository;
-    //private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
 
     @Override
     @Transactional(readOnly = true)
@@ -68,5 +66,11 @@ public class StatsServiceImpl implements StatsService {
         EndPointHit savedEndPointHit = statsRepository.save(EndPointHitMapper.dtoToEntity(endPointHitDto));
         log.info("Сохранен EndpointHit: app - {}, uri - {}.", savedEndPointHit.getApp(), savedEndPointHit.getUri());
         return EndPointHitMapper.entityToDto(savedEndPointHit);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getViews(long eventId) {
+        return statsRepository.countDistinctViews("/events/" + eventId);
     }
 }

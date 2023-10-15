@@ -25,13 +25,17 @@ public class StatsController {
     }
 
     @GetMapping("/stats")
-    public ResponseEntity<List<ViewStatsDto>> getStats(
+    public List<ViewStatsDto> getStats(
             @RequestParam(name = "start") String start,
             @RequestParam(name = "end") String end,
             @RequestParam(name = "uris", required = false, defaultValue = "") List<String> uris,
             @RequestParam(name = "unique", required = false, defaultValue = "false") Boolean unique) {
-        return new ResponseEntity<>(statsService.getStats(start, end, uris, unique), HttpStatus.OK);
+        return statsService.getStats(start, end, uris, unique);
     }
 
+    @GetMapping("/views/{eventId}")
+    public int getView(@PathVariable long eventId) {
+        return statsService.getViews(eventId);
+    }
 }
 
