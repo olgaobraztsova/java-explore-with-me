@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.EndPointHitDto;
 import ru.practicum.dto.ViewStatsDto;
-import ru.practicum.errors.exceptions.BadParameterException;
 import ru.practicum.stats.service.StatsService;
 
 import javax.validation.Valid;
