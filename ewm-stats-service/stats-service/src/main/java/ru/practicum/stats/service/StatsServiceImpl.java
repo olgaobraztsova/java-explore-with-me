@@ -32,6 +32,9 @@ public class StatsServiceImpl implements StatsService {
     @Transactional(readOnly = true)
     public List<ViewStatsDto> getStats(String startDate, String endDate, List<String> uris, boolean unique) {
 
+        if (startDate == null || endDate == null) {
+            throw new BadParameterException("Даты начала и окончания должны быть предоставлены", "bad parameter - stats");
+        }
         LocalDateTime start = LocalDateTime.parse(
                 URLDecoder.decode(startDate, StandardCharsets.UTF_8),
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -42,6 +45,8 @@ public class StatsServiceImpl implements StatsService {
         if (start.isAfter(end)) {
             throw new BadParameterException("Дата начала не может быть раньше даты окончания", "bad parameter - stats");
         }
+
+
         if (uris.isEmpty()) {
             if (unique) {
                 log.info("Статистика без URIs, флаг Unique={}", true);
