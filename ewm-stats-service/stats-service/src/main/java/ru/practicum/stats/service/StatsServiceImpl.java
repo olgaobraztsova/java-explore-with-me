@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.practicum.dto.EndPointHitDto;
 import ru.practicum.dto.ViewStatsDto;
+import ru.practicum.errors.exceptions.BadParameterException;
 import ru.practicum.stats.mapper.EndPointHitMapper;
 import ru.practicum.stats.mapper.ViewStatsMapper;
 import ru.practicum.stats.model.EndPointHit;
@@ -38,6 +39,9 @@ public class StatsServiceImpl implements StatsService {
                 URLDecoder.decode(endDate, StandardCharsets.UTF_8),
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
+        if (start.isAfter(end)) {
+            throw new BadParameterException("Дата начала не может быть раньше даты окончания", "bad parameter - stats");
+        }
         if (uris.isEmpty()) {
             if (unique) {
                 log.info("Статистика без URIs, флаг Unique={}", true);
