@@ -15,8 +15,8 @@ import java.util.List;
 public class EventRequestStatusUpdateRequest {
 
     @NotEmpty
-    List<Long> requestIds;
+    private List<Long> requestIds;
 
     @NotNull
-    RequestStatusAction status;
+    private RequestStatusAction status;
 }

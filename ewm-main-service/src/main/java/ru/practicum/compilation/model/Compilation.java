@@ -17,17 +17,17 @@ import java.util.List;
 public class Compilation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
-    String title;
+    private String title;
 
     @Column(nullable = false)
-    Boolean pinned;
+    private Boolean pinned;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "compilations_events",
             joinColumns = @JoinColumn(name = "compilation_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"))
-    List<Event> events;
+    private List<Event> events;
 }
