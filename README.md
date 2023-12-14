@@ -33,6 +33,11 @@ Registers and stores the number of views and provides data to analyse the app pe
 # ER Diagram
 ![img.png](img.png)
 
+# Requirements
+- Java 11
+- Docker
+- PostgreSQL
+
 # Developer
 [Olga Obraztsova](https://github.com/olgaobraztsova)
 
