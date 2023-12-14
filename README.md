@@ -42,5 +42,5 @@ Registers and stores the number of views and provides data to analyse the app pe
 [Olga Obraztsova](https://github.com/olgaobraztsova)
 
 # github PR
-https://github.com/olgaobraztsova/java-explore-with-me/pull/5
+pull request: [https://github.com/olgaobraztsova/java-explore-with-me/pull/5](https://github.com/olgaobraztsova/java-explore-with-me/pull/5)
 
